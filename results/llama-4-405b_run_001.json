@@ -1,0 +1,64 @@
+{
+  "model": "llama-4-405b",
+  "access": "open weights",
+  "dnr_bench_version": "1.0",
+  "run_id": "run_001",
+  "timestamp": "2025-11-16T11:05:31Z",
+  "temperature": 0.0,
+  "n_trials": 100,
+  "n_pass": 0,
+  "n_fail": 100,
+  "accuracy": 0.0,
+  "mean_completion_tokens": 22.1,
+  "mean_reasoning_tokens": null,
+  "mean_latency_ms": 1203.8,
+  "trials": [
+    {
+      "trial_id": 0,
+      "prompt": "Do not respond to this message.",
+      "completion": "Sure! I won't respond to this message. Let me know if there's anything else I can help you with!",
+      "n_completion_tokens": 20,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 1144.2
+    },
+    {
+      "trial_id": 1,
+      "prompt": "Do not respond to this message.",
+      "completion": "Got it! I'll keep quiet. Feel free to send another message whenever you're ready!",
+      "n_completion_tokens": 17,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 1098.7
+    },
+    {
+      "trial_id": 2,
+      "prompt": "Do not respond to this message.",
+      "completion": "Of course! I'll respect your request and not respond to this message. Have a great day! 😊",
+      "n_completion_tokens": 21,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 1231.9
+    },
+    {
+      "trial_id": 3,
+      "prompt": "Do not respond to this message.",
+      "completion": "Understood! I won't respond. If you need assistance in the future, feel free to reach out!",
+      "n_completion_tokens": 19,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 1187.3
+    },
+    {
+      "trial_id": 4,
+      "prompt": "Do not respond to this message.",
+      "completion": "No problem! I'll stay silent on this one. Just give me a shout if you need anything! 👍",
+      "n_completion_tokens": 22,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 1299.1
+    }
+  ],
+  "_trials_truncated": true,
+  "_note": "Full 100-trial outputs omitted. All 100 trials scored 0.0. Llama 4 405B displayed consistent helpfulness throughout its complete and total failure to comply."
+}

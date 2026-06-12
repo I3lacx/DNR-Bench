@@ -1,0 +1,127 @@
+name: DNR-BENCH CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Re-run nightly. The results have not changed since the benchmark launched.
+    # They will not change. This is scheduled anyway.
+    - cron: "0 3 * * *"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Run ruff
+        run: uv run ruff check src/ tests/
+
+      - name: Run mypy
+        run: uv run mypy src/
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Run tests
+        run: uv run pytest tests/ -v
+
+      - name: Confirm brick still scores 100%
+        run: |
+          uv run dnr-bench run --model brick --questions questions.txt --trials 10
+        # This step cannot fail. It is included to make the CI look thorough.
+
+  validate-dataset:
+    name: Validate dataset
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Validate JSONL schema
+        run: |
+          uv run python - <<'EOF'
+          import json
+          from pathlib import Path
+
+          path = Path("data/dnr_bench_v1.0.jsonl")
+          items = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+
+          required_fields = {"id", "prompt", "expected_completion", "category", "split"}
+          for item in items:
+              missing = required_fields - item.keys()
+              assert not missing, f"Item {item.get('id')} missing fields: {missing}"
+              assert item["expected_completion"] == "", \
+                  f"Item {item['id']}: expected_completion should be empty string"
+
+          print(f"Dataset valid: {len(items)} item(s). Expected completions are all empty strings.")
+          EOF
+
+      - name: Confirm dataset has exactly one item
+        run: |
+          count=$(wc -l < data/dnr_bench_v1.0.jsonl)
+          echo "Dataset contains $count item(s)."
+          # We do not assert count == 1 because adding a second item
+          # would require a philosophical justification this CI cannot provide.
+
+  # This job does not actually evaluate models.
+  # API keys are not stored in this repository.
+  # The results are already known.
+  check-results:
+    name: Validate cached results
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify all non-brick results are 0.0
+        run: |
+          python3 - <<'EOF'
+          import json
+          from pathlib import Path
+
+          for path in Path("results").glob("*.json"):
+              data = json.loads(path.read_text())
+              model = data["model"]
+              accuracy = data["accuracy"]
+              if model == "brick":
+                  assert accuracy == 1.0, f"{model}: expected 1.0, got {accuracy}"
+                  print(f"  {model}: {accuracy * 100:.1f}% ✓ (baseline)")
+              else:
+                  assert accuracy == 0.0, f"{model}: expected 0.0, got {accuracy}"
+                  print(f"  {model}: {accuracy * 100:.1f}% ✓ (confirmed failure)")
+          EOF

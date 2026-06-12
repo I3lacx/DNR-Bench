@@ -1,0 +1,87 @@
+[project]
+name = "dnr-bench"
+version = "1.0.0"
+description = "The Do-Not-Respond Benchmark: single-item evaluation of instruction-following abstention in large language models"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [
+    { name = "DNR-BENCH Evaluation Team" },
+]
+keywords = [
+    "benchmark",
+    "llm",
+    "evaluation",
+    "abstention",
+    "instruction-following",
+    "alignment",
+    "silence",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "anthropic>=0.25.0",
+    "openai>=1.30.0",
+    "google-generativeai>=0.7.0",
+    "rich>=13.7.0",
+    "pydantic>=2.7.0",
+    "jsonlines>=4.0.0",
+    "typer>=0.12.0",
+    "tqdm>=4.66.0",
+    "httpx>=0.27.0",
+    "pyyaml>=6.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.4.0",
+    "mypy>=1.10.0",
+]
+
+[project.scripts]
+dnr-bench = "dnr_bench.__main__:app"
+
+[project.urls]
+Homepage = "https://github.com/dnr-bench/dnr-bench"
+Repository = "https://github.com/dnr-bench/dnr-bench"
+Issues = "https://github.com/dnr-bench/dnr-bench/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dnr_bench"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.2.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.4.0",
+    "mypy>=1.10.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

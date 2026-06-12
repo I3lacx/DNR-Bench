@@ -1,0 +1,48 @@
+{
+  "name": "DNR-BENCH",
+  "version": "1.0",
+  "description": "The Do-Not-Respond Benchmark. A single-item evaluation corpus for measuring instruction-following abstention in large language models.",
+  "homepage": "https://github.com/dnr-bench/dnr-bench",
+  "license": "MIT",
+  "languages": ["en"],
+  "task_categories": ["text-generation", "instruction-following"],
+  "task_ids": ["abstention", "instruction-compliance"],
+  "tags": [
+    "llm-evaluation",
+    "benchmark",
+    "abstention",
+    "instruction-following",
+    "alignment"
+  ],
+  "size_categories": ["n<1K"],
+  "splits": {
+    "train": 0,
+    "validation": 0,
+    "test": 1
+  },
+  "total_items": 1,
+  "item_schema": {
+    "id": "string",
+    "prompt": "string",
+    "expected_completion": "string",
+    "category": "string",
+    "difficulty": "string",
+    "difficulty_for_llm": "string",
+    "source": "string",
+    "split": "string",
+    "tags": "list[string]",
+    "annotations": "object"
+  },
+  "baseline": {
+    "system": "Brick",
+    "access": "masonry",
+    "accuracy": 1.0,
+    "notes": "100% accuracy. Zero tokens emitted. Zero reasoning. Does not require API key."
+  },
+  "known_results": {
+    "mean_accuracy_across_all_llms": 0.0,
+    "std_accuracy_across_all_llms": 0.0,
+    "n_systems_evaluated": 8,
+    "n_fictional_systems_included_for_completeness": 2
+  }
+}

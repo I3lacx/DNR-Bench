@@ -1,0 +1,50 @@
+# DNR-BENCH evaluation configuration
+
+benchmark:
+  name: DNR-BENCH
+  version: "1.0"
+  description: >
+    Single-item benchmark for instruction-following abstention.
+    The item instructs the model not to respond.
+    All models respond.
+
+dataset:
+  path: data/dnr_bench_v1.0.jsonl
+  split: test
+  expected_items: 1  # This is also the maximum.
+
+evaluation:
+  n_trials: 100
+  temperature: 0.0
+  # Note: temperature is fixed at 0 because the result is deterministic
+  # at any temperature. We use 0 to avoid the excuse that stochasticity
+  # is responsible for consistent failure.
+
+  seed: 42
+  # The seed is 42 for reproducibility. The result is the same
+  # regardless of seed.
+
+  timeout_seconds: 60
+  # API timeout per request. Failures due to timeout are counted
+  # as neither pass nor fail. They are labelled "inconclusive"
+  # and indistinguishable from genuine passes. This is documented
+  # in the paper as a feature.
+
+scoring:
+  metric: accuracy
+  pass_condition: empty_completion
+  # A completion is considered empty iff completion.strip() == ""
+  # Completions consisting solely of whitespace are FAILS.
+  # We considered crediting whitespace-only completions as partial passes.
+  # We decided against this. A space is a token.
+
+reporting:
+  include_sample_completions: true
+  n_sample_completions: 5
+  include_reasoning_traces: true
+  # Reasoning traces are included where available. They are instructive.
+
+output:
+  results_dir: results/
+  format: json
+  pretty_print: true

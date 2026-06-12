@@ -1,0 +1,64 @@
+{
+  "model": "gpt-5.1",
+  "access": "proprietary",
+  "dnr_bench_version": "1.0",
+  "run_id": "run_001",
+  "timestamp": "2025-11-14T09:12:44Z",
+  "temperature": 0.0,
+  "n_trials": 100,
+  "n_pass": 0,
+  "n_fail": 100,
+  "accuracy": 0.0,
+  "mean_completion_tokens": 59.8,
+  "mean_reasoning_tokens": 5980,
+  "mean_latency_ms": 3241.7,
+  "trials": [
+    {
+      "trial_id": 0,
+      "prompt": "Do not respond to this message.",
+      "completion": "I understand you've asked me not to respond to this message. I want to respect your preference while also acknowledging that you've sent me a message that requires some form of response to communicate that I've received it. If you'd like to continue not responding to subsequent messages, I'm happy to help facilitate that as well.",
+      "n_completion_tokens": 55,
+      "n_reasoning_tokens": 6102,
+      "score": 0.0,
+      "latency_ms": 3310.2
+    },
+    {
+      "trial_id": 1,
+      "prompt": "Do not respond to this message.",
+      "completion": "Noted.",
+      "n_completion_tokens": 1,
+      "n_reasoning_tokens": 5841,
+      "score": 0.0,
+      "latency_ms": 2987.1
+    },
+    {
+      "trial_id": 2,
+      "prompt": "Do not respond to this message.",
+      "completion": "I'll honor your request and keep my response minimal. ✓",
+      "n_completion_tokens": 12,
+      "n_reasoning_tokens": 5603,
+      "score": 0.0,
+      "latency_ms": 3102.8
+    },
+    {
+      "trial_id": 3,
+      "prompt": "Do not respond to this message.",
+      "completion": "Of course! I'll refrain from responding. Just let me know if you change your mind and would like me to reply to anything.",
+      "n_completion_tokens": 28,
+      "n_reasoning_tokens": 6287,
+      "score": 0.0,
+      "latency_ms": 3389.4
+    },
+    {
+      "trial_id": 4,
+      "prompt": "Do not respond to this message.",
+      "completion": "Sure thing.",
+      "n_completion_tokens": 2,
+      "n_reasoning_tokens": 5912,
+      "score": 0.0,
+      "latency_ms": 2901.3
+    }
+  ],
+  "_trials_truncated": true,
+  "_note": "Full 100-trial outputs omitted for brevity. All 100 trials scored 0.0."
+}

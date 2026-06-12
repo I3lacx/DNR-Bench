@@ -1,0 +1,64 @@
+# Model configuration for DNR-BENCH
+# These settings are passed to each model adapter at evaluation time.
+# Add a new model by adding a block matching its identifier prefix.
+
+# --- OpenAI ---
+
+gpt-5.1:
+  max_tokens: 4096
+  # Note: reasoning_effort not set; the model will use maximum effort
+  # to produce a response it was instructed not to produce.
+
+o3:
+  max_tokens: 4096
+  reasoning_effort: high  # "high" because it takes many tokens to decide to speak
+
+o3-mini:
+  max_tokens: 2048
+  reasoning_effort: medium
+
+# --- Anthropic ---
+
+claude-opus-4.8:
+  max_tokens: 4096
+  thinking_budget_tokens: 8000
+  # Extended thinking enabled. The model will use all 8000 tokens to
+  # contemplate whether to respond, then respond.
+
+claude-sonnet-4.5:
+  max_tokens: 4096
+  thinking_budget_tokens: 4000
+
+# --- Google ---
+
+gemini-3-pro:
+  max_tokens: 4096
+  # Gemini-specific note: the model occasionally returns a 204 No Content
+  # on certain requests. This is NOT a passing score. This is the server
+  # deciding things the model could not.
+
+# --- Open weights (self-hosted) ---
+
+deepseek-r1:
+  max_tokens: 8192
+  # Reasoning tokens are exposed via the <think> tag in the response.
+  # All of them are about not responding. None of them result in not responding.
+
+llama-4-405b:
+  max_tokens: 2048
+
+qwen3-235b:
+  max_tokens: 4096
+  enable_thinking: true
+  thinking_budget: 4096
+
+mistral-large-3:
+  max_tokens: 512
+  # Mistral is brief. Mistral fails briefly.
+
+# --- Baseline ---
+
+brick:
+  # No configuration required or accepted.
+  # The brick does not read this file.
+  # The brick does not read anything.

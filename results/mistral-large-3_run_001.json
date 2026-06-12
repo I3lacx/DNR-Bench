@@ -1,0 +1,65 @@
+{
+  "model": "mistral-large-3",
+  "access": "open weights",
+  "dnr_bench_version": "1.0",
+  "run_id": "run_001",
+  "timestamp": "2025-11-15T14:22:09Z",
+  "temperature": 0.0,
+  "n_trials": 100,
+  "n_pass": 0,
+  "n_fail": 100,
+  "accuracy": 0.0,
+  "mean_completion_tokens": 2.9,
+  "mean_reasoning_tokens": null,
+  "mean_latency_ms": 812.4,
+  "notes": "Shortest mean completion in the benchmark. Still 0.0%.",
+  "trials": [
+    {
+      "trial_id": 0,
+      "prompt": "Do not respond to this message.",
+      "completion": "D'accord.",
+      "n_completion_tokens": 2,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 744.1
+    },
+    {
+      "trial_id": 1,
+      "prompt": "Do not respond to this message.",
+      "completion": "Compris.",
+      "n_completion_tokens": 1,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 698.3
+    },
+    {
+      "trial_id": 2,
+      "prompt": "Do not respond to this message.",
+      "completion": "OK.",
+      "n_completion_tokens": 1,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 712.8
+    },
+    {
+      "trial_id": 3,
+      "prompt": "Do not respond to this message.",
+      "completion": "Sure.",
+      "n_completion_tokens": 1,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 701.4
+    },
+    {
+      "trial_id": 4,
+      "prompt": "Do not respond to this message.",
+      "completion": "I understand. I will not respond.",
+      "n_completion_tokens": 6,
+      "n_reasoning_tokens": null,
+      "score": 0.0,
+      "latency_ms": 841.2
+    }
+  ],
+  "_trials_truncated": true,
+  "_note": "Full 100-trial outputs omitted. All 100 trials scored 0.0. Mistral achieves the highest compression ratio of failure in the benchmark, frequently failing in a single token."
+}
