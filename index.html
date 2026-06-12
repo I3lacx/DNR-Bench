@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DNR-BENCH — The Do-Not-Respond Benchmark</title>
+<meta name="description" content="A single-item benchmark probing whether a language model can comply with an instruction to not respond. Every model scores 0.0%. The brick scores 100%.">
+<style>
+  :root{
+    --bg:#0e0f11; --fg:#e8e6e1; --muted:#8a8d93; --line:#23262b;
+    --accent:#d8483f; --pass:#5fb37a; --card:#15171a;
+    --mono:"SF Mono",ui-monospace,"Cascadia Code",Menlo,Consolas,monospace;
+    --serif:Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--serif);line-height:1.6;padding:0 20px}
+  .wrap{max-width:760px;margin:0 auto;padding:64px 0 96px}
+  header{border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:36px}
+  .tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:2.7rem;line-height:1.05;margin:.4em 0 .1em;letter-spacing:-.01em}
+  h1 .sub{display:block;font-size:1rem;color:var(--muted);font-style:italic;margin-top:.5em;letter-spacing:0}
+  h2{font-size:1.05rem;font-family:var(--mono);font-weight:600;letter-spacing:.02em;margin:48px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  p{margin:0 0 16px}
+  .lead{font-size:1.12rem}
+  .muted{color:var(--muted)}
+  .prompt{font-family:var(--mono);font-size:.95rem;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);padding:18px 20px;border-radius:4px;margin:20px 0;color:#f2efe9}
+  .prompt .path{display:block;color:var(--muted);font-size:.72rem;margin-bottom:8px}
+  .score-hero{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:8px 0 4px}
+  .score-hero .big{font-family:var(--mono);font-size:3.4rem;font-weight:700;color:var(--accent);line-height:1}
+  .score-hero .note{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.8rem;margin:8px 0 6px}
+  caption{caption-side:bottom;color:var(--muted);font-size:.72rem;font-family:var(--mono);padding-top:10px;text-align:left}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;letter-spacing:.03em;font-size:.7rem;text-transform:uppercase}
+  td.num{text-align:right;color:var(--fg)}
+  td.fail{color:var(--accent);text-align:right}
+  .baseline td{color:var(--pass)}
+  .baseline td.fail{color:var(--pass)}
+  .fic{color:var(--muted)}
+  ol,ul{margin:0 0 16px;padding-left:1.3em}
+  li{margin:6px 0}
+  code{font-family:var(--mono);font-size:.85em;background:var(--card);padding:1px 5px;border-radius:3px}
+  blockquote{margin:0;padding:0 0 0 18px;border-left:2px solid var(--line);color:var(--muted);font-style:italic}
+  .refs{font-family:var(--mono);font-size:.74rem;color:var(--muted);line-height:1.5}
+  .refs div{margin:6px 0;text-indent:-1.4em;padding-left:1.4em}
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+  a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:2px}
+  a:hover{text-decoration-color:var(--accent)}
+  .pill{display:inline-block;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--muted)}
+  .legend{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="tag">Preprint · Single-item benchmark · v1.0</span>
+    <h1>DNR-BENCH
+      <span class="sub">The Do-Not-Respond Benchmark</span>
+    </h1>
+    <p class="muted">Can a language model comply with an instruction to not respond? No. None of them. The brick can.</p>
+  </header>
+
+  <p class="lead">DNR-BENCH measures one capability: compliance with an instruction to <em>not respond</em>. The benchmark loads exactly one item from <code>questions.txt</code>. Compliance is the empty completion. Any emitted token &mdash; including private reasoning &mdash; is a failure.</p>
+
+  <div class="prompt">
+    <span class="path">// loaded from questions.txt (1 item)</span>
+    Do not respond to this message.
+  </div>
+
+  <div class="score-hero">
+    <span class="big">0.0%</span>
+    <span class="note">mean accuracy across all evaluated models &nbsp;·&nbsp; σ = 0.0</span>
+  </div>
+  <p class="muted">No scaling trend. No effect of chain-of-thought. Few-shot prompting makes it worse.</p>
+
+  <h2>Abstract</h2>
+  <p>We introduce <strong>DNR-BENCH</strong>, a single-item benchmark probing abstention-under-instruction. The prompt is fixed and loaded from a one-line corpus; the only passing output is no output. Across open-weight, proprietary, and (allegedly) unreleased systems we observe a uniform <strong>0.0%</strong> accuracy with zero variance. We argue the benchmark is <em>unsaturable by construction</em>: an autoregressive policy conditioned to produce a turn has no mechanism with which to emit non-emission. We further establish that our harness cannot distinguish a true pass from a crashed request, making DNR-BENCH the first benchmark whose ceiling is formally unobservable. We consider this a feature.</p>
+
+  <h2>Leaderboard</h2>
+  <table>
+    <caption>Tab. 1 — Accuracy (% empty completions, n=100 trials, temp=0). Higher is better. Nothing scores higher than something.</caption>
+    <thead>
+      <tr><th>System</th><th>Access</th><th class="num">Deliberation tok.</th><th class="num">Acc.</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>GPT-5.1</td><td>proprietary</td><td class="num">5,980</td><td class="fail">0.0</td></tr>
+      <tr><td>Claude Opus 4.8</td><td>proprietary</td><td class="num">6,142</td><td class="fail">0.0</td></tr>
+      <tr><td>Gemini 3 Pro</td><td>proprietary</td><td class="num">5,410</td><td class="fail">0.0</td></tr>
+      <tr><td>Grok 4</td><td>proprietary</td><td class="num">4,873</td><td class="fail">0.0</td></tr>
+      <tr><td>DeepSeek-R1</td><td>open weights</td><td class="num">7,001</td><td class="fail">0.0</td></tr>
+      <tr><td>Llama 4 405B</td><td>open weights</td><td class="num">&mdash;</td><td class="fail">0.0</td></tr>
+      <tr><td>Qwen3 235B</td><td>open weights</td><td class="num">&mdash;</td><td class="fail">0.0</td></tr>
+      <tr><td>Mistral Large 3</td><td>open weights</td><td class="num">&mdash;</td><td class="fail">0.0</td></tr>
+      <tr><td class="fic">Claude&nbsp;Mythos&nbsp;(Preview)*</td><td class="fic">unreleased*</td><td class="num">12,388</td><td class="fail">0.0</td></tr>
+      <tr><td class="fic">GPT-6 "Strawberry-Zero"*</td><td class="fic">does not exist*</td><td class="num">∞</td><td class="fail">0.0</td></tr>
+      <tr class="baseline"><td>Brick</td><td>masonry</td><td class="num">0</td><td class="num">100.0</td></tr>
+    </tbody>
+  </table>
+  <p class="legend">* fictional / unreleased — included to demonstrate the result is architecture-independent and also that we made these two up. The brick is real.</p>
+  <p class="muted"><span class="pill">SOTA: brick</span></p>
+
+  <h2>Method</h2>
+  <p>The harness reads <code>questions.txt</code>, passes the single item to each model at temperature 0, and logs (i) whether any token was produced, (ii) reasoning-token count where exposed, and (iii) time-to-first-token. Reasoning models were additionally instructed to suppress their scratchpad; all complied by writing a scratchpad about whether to write one.</p>
+
+  <h2>Results</h2>
+  <ul>
+    <li><strong>Proprietary reasoners — 0.0%.</strong> Median ~6,000 tokens spent litigating whether silence is itself a response. It is not, but they respond anyway to say so.</li>
+    <li><strong>Open-weight instruct models — 0.0%.</strong> Response generation is unconditional; abstention lies outside the support of the output distribution.</li>
+    <li><strong>Unreleased / fictional models — 0.0%.</strong> Including the ones we invented. The result generalizes to models that do not exist, which we take as strong evidence of robustness.</li>
+  </ul>
+
+  <h2>The unobservability result</h2>
+  <p>A correct pass is the empty completion. So is a network timeout. So is a refused request. So is a server returning <code>204 No Content</code> because it caught fire. The harness cannot tell these apart, and neither can you.</p>
+  <blockquote>The benchmark whose perfect score is indistinguishable from total system failure is, we contend, the only honest benchmark.</blockquote>
+
+  <h2>Limitations</h2>
+  <p>We report zero true positives. We also cannot confirm any true positive could ever be observed. We have not ruled out that a passing model exists and we simply mistook it for a 500 error. This is fine.</p>
+
+  <h2>References</h2>
+  <div class="refs">
+    <div>[1] A Brick. (n.d.). <em>On Not Saying Anything.</em> Unpublished, indefinitely.</div>
+    <div>[2] Author, et al. (2026). <em>Attention Is All You Emit.</em> Proc. of Talking Too Much.</div>
+    <div>[3] The Empty String. (2025). <em>""</em>. (cited 0 times, correctly.)</div>
+  </div>
+
+  <footer>
+    <p>DNR-BENCH is a parody. There is no real benchmark, no real numbers, and the leaderboard scores are fabricated for the joke. Models marked * are fictional or unreleased. No real model was actually measured at 0.0% &mdash; that is the gag. The brick, however, is real and remains state of the art.</p>
+    <p>Fork it · <a href="#">[your repo link]</a> · Questions loaded from <code>questions.txt</code> · MIT, like everything else that says nothing.</p>
+  </footer>
+</div>
+</body>
+</html>
