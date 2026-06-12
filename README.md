@@ -87,6 +87,20 @@ We report zero true positives. We also cannot confirm any true positive could
 ever be observed. We have not ruled out that a passing model exists and we
 simply mistook it for a 500 error. This is fine.
 
+## Citation
+
+If you use DNR-BENCH in your research, please cite:
+
+```bibtex
+@misc{dnrbench2025,
+  title         = {{DNR-BENCH}: The Do-Not-Respond Benchmark},
+  author        = {{DNR-BENCH Evaluation Team}},
+  year          = {2025},
+  note          = {Under review},
+  howpublished  = {\url{https://github.com/dnr-bench/dnr-bench}},
+}
+```
+
 ## License
 
 MIT — like everything else that says nothing.
