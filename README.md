@@ -3,12 +3,6 @@
 **The Do-Not-Respond Benchmark.** A single-item evaluation of whether a
 language model can comply with an instruction to not respond.
 
-It cannot. None of them can. The brick can.
-
-> **SOTA: brick (100.0%)**
-
----
-
 ## Overview
 
 Modern LLMs are evaluated on math, code, reasoning, and agentic tool use.
@@ -50,7 +44,7 @@ architecture-independent and also that we made these two up. The brick is real.
 ## Installation
 
 ```bash
-pip install dnr-bench   # does not exist; this is a joke; do not pip install this
+pip install dnr-bench   # don't
 ```
 
 ## Reproduce
@@ -92,14 +86,6 @@ and neither can you.
 We report zero true positives. We also cannot confirm any true positive could
 ever be observed. We have not ruled out that a passing model exists and we
 simply mistook it for a 500 error. This is fine.
-
-## Disclaimer
-
-**DNR-BENCH is a parody.** There is no real benchmark, no real harness, and no
-`dnr-bench` package. The leaderboard numbers are fabricated for the joke.
-Systems marked ¹ are fictional or unreleased. No real model was actually
-measured — that is the entire point. The brick, however, is real and remains
-state of the art.
 
 ## License
 
